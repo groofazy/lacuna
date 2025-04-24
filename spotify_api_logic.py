@@ -59,7 +59,6 @@ def print_top_tracks_and_popularity(token, artist_id):
     for idx, track in enumerate(top_tracks):
         print(f"{idx +1}. {track['name']} has a popularity score of {track['popularity']}")
 
-
 def get_album_tracks(token, artist_id):
     album_ids = get_artists_albums_ids(token, artist_id)
     track_names = []
