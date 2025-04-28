@@ -17,6 +17,12 @@ def search_for_artist(token, artist_name):
     
     return json_result[0]
 
+def get_artist_name(token, artist_name):
+    artist_result = search_for_artist(token, artist_name)
+    name = artist_result['name']
+
+    return name
+
 # function to get songs from artist
 def get_artists_top_tracks(token, artist_id):
     url = f"https://api.spotify.com/v1/artists/{artist_id}/top-tracks?country=CA" # look for specific artist and their top tracks
@@ -27,7 +33,7 @@ def get_artists_top_tracks(token, artist_id):
 
 # function to get albums from specific artist
 def get_artists_albums(token, artist_id):
-    url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?limit=10" # request for artist's albums, top 10
+    url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups=album&limit=50" # request for artist's albums, limit to 50 items returned
     headers = get_auth_header(token)
     result = get(url, headers=headers)
     json_result = json.loads(result.content)["items"]
@@ -42,6 +48,15 @@ def get_artists_albums_ids(token, artist_id):
         album_ids.append(album['id'])
     
     return album_ids
+
+def get_num_artist_albums(token, artist_id):
+    albums = get_artists_albums(token, artist_id)
+    counter = 0
+
+    for idx, album in enumerate(albums):
+        counter += 1
+    
+    return counter
 
 def get_artists_top_tracks_popularity(token, artist_id):
     top_tracks = get_artists_top_tracks(token, artist_id)
@@ -72,3 +87,13 @@ def get_album_tracks(token, artist_id):
             track_names.append(album_item['name'])
     
     return track_names
+
+def get_avg_pop_score(token, artist_id):
+    pop_array = get_artists_top_tracks_popularity(token, artist_id)
+    total = 0
+    for i in pop_array:
+        total += i
+    
+    avg_pop = total / len(pop_array)
+
+    return avg_pop
