@@ -28,3 +28,32 @@ def print_artists_data():
     cur = con.cursor()
     for row in cur.execute("SELECT name, num_albums, popularity FROM artist"):
         print(row)
+
+def artist_in_db(name):
+    con = sqlite3.connect('spotify.db')
+    cur = con.cursor()   
+
+    cur.execute("SELECT 1 FROM artist WHERE name = ?", (name,))
+    exists = cur.fetchone() is not None
+    con.close()
+    return exists
+
+def delete_artist(name):
+    con = sqlite3.connect('spotify.db')
+    cur = con.cursor()
+
+    cur.execute("DELETE FROM artist WHERE name = ?", (name,))  
+    con.commit()
+    con.close()
+
+def delete_db():
+    con = sqlite3.connect('spotify.db')
+    cur = con.cursor() 
+
+    cur.execute("DELETE FROM artist")
+
+    con.commit()
+    con.close()
+
+# delete_db()
+# print_artists_data()
