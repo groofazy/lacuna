@@ -56,4 +56,4 @@ def delete_db():
     con.close()
 
 # delete_db()
-# print_artists_data()
+print_artists_data()
