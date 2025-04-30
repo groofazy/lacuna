@@ -1,4 +1,4 @@
-from flask import Flask, url_for, request, jsonify
+from flask import Flask, url_for, request, jsonify, send_from_directory
 from markupsafe import escape
 import db
 import spotify_api_logic
@@ -11,7 +11,7 @@ db.initalize_db()
 
 @app.route('/')
 def index():
-    return '<p>Index Page<p>'
+    return send_from_directory("static", "index.html")
 
 @app.route('/hello')
 def hello_world():
