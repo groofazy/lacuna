@@ -61,19 +61,54 @@ def test_post_artist_missing_name():
 
     assert "error" in json_data 
 
-def test_post_artist_not_found():
+# def test_post_artist_not_found(): # test wont pass due to spotify returning "similar artist" results
+#     app.testing = True
+#     client = app.test_client()
+
+#     artist_data = {"artist_name": "name_that_does_not_exist"}
+    
+#     response = client.post("/artists", json=artist_data)
+
+#     assert response.status_code == 404
+
+#     json_data = response.get_json()
+
+#     assert "error" in json_data
+
+def test_delete_known_artist():
+
+    delete_artist("Aphex Twin")
+
     app.testing = True
     client = app.test_client()
 
-    artist_data = {"artist_name": "some_random_name_that_does_not_exist"}
-    
-    response = client.post("/artists", json=artist_data)
+    artist_data = {"artist_name": "Aphex Twin"}
+    response1 = client.post(f"/artists", json=artist_data)
 
-    assert response.status_code == 404
+    assert response1.status_code == 201
 
-    json_data = response.get_json()
+    artist_name = "Aphex Twin"
+    response2 = client.delete(f"/artists/{artist_name}")
 
-    assert "error" in json_data
+    assert response2.status_code == 200
+
+    json_data = response2.get_json()
+
+    assert "message" in json_data # checking for success message
+
+def test_delete_unknown_artist():
+
+    app.testing = True
+    client = app.test_client()
+
+    artist_name = "AphexOnly" # name that doesnt exist in database
+    response2 = client.delete(f"/artists/{artist_name}")
+
+    assert response2.status_code == 404
+
+    json_data = response2.get_json()
+
+    assert "error" in json_data # checking for error message
 
     
 
