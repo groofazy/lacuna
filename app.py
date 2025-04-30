@@ -38,8 +38,8 @@ def artists_get():
     return jsonify(artists)
 
 def artists_post():
-    con = sqlite3.connect('spotify.db')
-    cur = con.cursor()
+    con = sqlite3.connect('spotify.db') # check if con can be removed as a parameter in og function
+    # cur = con.cursor() # can be deleted
 
     data = request.get_json()
 
@@ -81,6 +81,19 @@ def artists():
     else:
         return artists_post()
 
+@app.route('/artists/<name>', methods=['DELETE'])
+def delete_artist(name): # name is passed in as kwarg from route
+    # can call spotify api and do search for artist, to get the exact name from spotify and delete from db, since they are the same name y'know?
+
+
+    # check if artist exists
+    artist_result = db.artist_in_db(name)
+
+    if artist_result is False:
+        return jsonify({"error": f"Artist '{name}' does not exist in the database."}), 404
+    else:
+        db.delete_artist(name)
+        return jsonify({"message": f"Artist '{name}' deleted successfully."}), 200
 
 if __name__ == "__main__":
     app.run(debug=True)
