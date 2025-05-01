@@ -55,5 +55,5 @@ def delete_db():
     con.commit()
     con.close()
 
-# delete_db()
+delete_db()
 print_artists_data()
