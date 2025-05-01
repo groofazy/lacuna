@@ -13,19 +13,9 @@ db.initalize_db()
 def index():
     return send_from_directory("static", "index.html")
 
-@app.route('/hello')
-def hello_world():
-    return 'Hello, World!'
 
-@app.route('/user/<username>') # this can be used for strings, int, float, path, and uuid
-def show_user_profile(username): # function takes username as kwargs from @app.route
-    return f'User {escape(username)}\'s profile!'
 
-with app.test_request_context(): # builds URL to specific function
-    print(url_for('index'))
-    print(url_for('hello_world'))
-    print(url_for('hello_world', next='/'))
-    print(url_for('show_user_profile', username='John Doe'))
+
 
 def artists_get():
     artists = []
