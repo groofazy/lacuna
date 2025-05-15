@@ -20,7 +20,6 @@ def get_token(): # client credentials workflow
     headers = {
         "Authorization": "Basic " + auth_base64, # sending auth data, verify if its correct, returns token
         "Content-Type": "application/x-www-form-urlencoded"
-
     }
 
     data = {"grant_type": "client_credentials"}

@@ -13,10 +13,6 @@ db.initalize_db()
 def index():
     return send_from_directory("static", "index.html")
 
-
-
-
-
 def artists_get():
     artists = []
     for artist in db.get_all_artists():
@@ -28,9 +24,6 @@ def artists_get():
     return jsonify(artists)
 
 def artists_post():
-    con = sqlite3.connect('spotify.db') # check if con can be removed as a parameter in og function
-    # cur = con.cursor() # can be deleted
-
     data = request.get_json()
 
     if not data or 'artist_name' not in data: # returns error code for missing artist name
@@ -59,7 +52,7 @@ def artists_post():
     avg_popularity = spotify_api_logic.get_avg_pop_score(token, artist_id)
 
     # insert into database
-    db.insert_artist(real_name, num_albums, avg_popularity, con)
+    db.insert_artist(real_name, num_albums, avg_popularity)
 
     return jsonify({"message": f"Artist '{real_name}' added successfully."}), 201
 

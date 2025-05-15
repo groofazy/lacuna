@@ -6,9 +6,8 @@ def initalize_db():
     # create table statement
     cur.execute("CREATE TABLE IF NOT EXISTS artist(name, num_albums, popularity)") # include if not exists to bypass the "table already exists" error message
 
-def insert_artist(name, num_albums, popularity, con):
+def insert_artist(name, num_albums, popularity):
     con = sqlite3.connect('spotify.db')
-    # cur = con.cursor()
     with con:
         con.execute("INSERT INTO artist(name, num_albums, popularity) VALUES(?, ?, ?)", (name, num_albums, popularity))
     con.commit()
@@ -55,5 +54,5 @@ def delete_db():
     con.commit()
     con.close()
 
-delete_db()
-print_artists_data()
+# delete_db()
+# print_artists_data()

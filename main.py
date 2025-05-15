@@ -15,9 +15,7 @@ num_albums = get_num_artist_albums(token, artist_id)
 artist_name = get_artist_name(token, user_search_name)
 
 def db_insert(artist_name, num_albums, score):
-    conn = sqlite3.connect('spotify.db')
-    insert_artist(artist_name, num_albums, score, conn)
-    conn.close()
+    insert_artist(artist_name, num_albums, score)
 
 
 db_insert(artist_name, num_albums, score)

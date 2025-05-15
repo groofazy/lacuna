@@ -1,0 +1,10 @@
+body {
+    background-color: white;
+}
+
+#artist_list {
+    color: green;
+    font-size: 30px;
+    font-family: monospace;
+
+}
