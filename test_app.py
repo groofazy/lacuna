@@ -61,20 +61,6 @@ def test_post_artist_missing_name():
 
     assert "error" in json_data 
 
-# def test_post_artist_not_found(): # test wont pass due to spotify returning "similar artist" results
-#     app.testing = True
-#     client = app.test_client()
-
-#     artist_data = {"artist_name": "name_that_does_not_exist"}
-    
-#     response = client.post("/artists", json=artist_data)
-
-#     assert response.status_code == 404
-
-#     json_data = response.get_json()
-
-#     assert "error" in json_data
-
 def test_delete_known_artist():
 
     delete_artist("Aphex Twin")
@@ -83,7 +69,7 @@ def test_delete_known_artist():
     client = app.test_client()
 
     artist_data = {"artist_name": "Aphex Twin"}
-    response1 = client.post(f"/artists", json=artist_data)
+    response1 = client.post("/artists", json=artist_data)
 
     assert response1.status_code == 201
 

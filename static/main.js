@@ -1,5 +1,6 @@
 const input = document.querySelector("#artist_input");
 const btn = document.querySelector("#submit_btn");
+
 btn.addEventListener("click", () => {
     const name = input.value.trim();
 
@@ -16,15 +17,18 @@ btn.addEventListener("click", () => {
         },
         body: JSON.stringify({ artist_name: name })
     })
+
     .then(response => response.json())
+    
     .then(data => {
         if (data.message) {
-            alert(data.message); // success
+            // alert(data.message); // success
             load_artists();
         } else if (data.error) {
             alert("Error: " + data.error); // error from backend
         }
     })
+    
     .catch(err => {
         console.error('Request failed:', err);
         alert("Something went wrong.");
@@ -39,23 +43,22 @@ function load_artists() {
         listContainer.innerHTML = ""; // clear existing list
 
         data.forEach(artist => {
-            const item = document.createElement("div");
-            item.textContent = `${artist.name} - ${artist.num_albums} albums - Popularity: ${artist.popularity}`;
+            const item = document.createElement("div"); // dynamically create element
+            item.textContent = `${artist.name} - ${artist.num_albums} albums - Popularity: ${artist.popularity} - Top Tracks: ${artist.top_tracks}`;
             
-            const deleteBtn = document.createElement("button");
+            const deleteBtn = document.createElement("button"); // dynamically create element
+            
+            deleteBtn.className = "delete-btn";
+            
             deleteBtn.textContent = "Delete";
             deleteBtn.style.marginLeft = "10px";
 
             deleteBtn.addEventListener("click", () => {
-                const confirmed = confirm(`Delete artist "${artist.name}"?`);
-                if (!confirmed) return;
-
                 fetch(`http://127.0.0.1:5000/artists/${encodeURIComponent(artist.name)}`, {
                     method: "DELETE"
             })
             .then(response => response.json())
             .then(data => {
-                alert(data.message || data.error);
                 load_artists(); // refresh the list after deletion
             })
             .catch(err => {

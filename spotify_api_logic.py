@@ -31,6 +31,11 @@ def get_artists_top_tracks(token, artist_id):
     json_result = json.loads(result.content)["tracks"]
     return json_result 
 
+def get_artists_top_tracks_string(token, artist_id):
+    top_tracks = get_artists_top_tracks(token, artist_id)
+    names = [track["name"] for track in top_tracks[:10]]
+    return ", ".join(names)
+
 # function to get albums from specific artist
 def get_artists_albums(token, artist_id):
     url = f"https://api.spotify.com/v1/artists/{artist_id}/albums?include_groups=album&limit=50" # request for artist's albums, limit to 50 items returned

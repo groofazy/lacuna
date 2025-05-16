@@ -19,7 +19,8 @@ def artists_get():
         artists.append({
             "name": artist[0],
             "num_albums": artist[1],
-            "popularity": artist[2]
+            "popularity": artist[2],
+            "top_tracks": artist[3]
         })
     return jsonify(artists)
 
@@ -50,9 +51,10 @@ def artists_post():
 
     num_albums = spotify_api_logic.get_num_artist_albums(token, artist_id)
     avg_popularity = spotify_api_logic.get_avg_pop_score(token, artist_id)
+    top_tracks = spotify_api_logic.get_artists_top_tracks_string(token, artist_id)
 
     # insert into database
-    db.insert_artist(real_name, num_albums, avg_popularity)
+    db.insert_artist(real_name, num_albums, avg_popularity, top_tracks)
 
     return jsonify({"message": f"Artist '{real_name}' added successfully."}), 201
 
