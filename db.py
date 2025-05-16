@@ -73,6 +73,6 @@ def drop_db():
 
 # initalize_db()
 
-# drop_db()
+drop_db()
 # delete_db()
-print_artists_data()
+# print_artists_data()

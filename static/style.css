@@ -10,6 +10,7 @@ body {
 
 .delete-btn {
     background-color: skyblue;
+    margin-left: 10px;
 }
 
 #artist_input {

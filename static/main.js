@@ -44,14 +44,14 @@ function load_artists() {
 
         data.forEach(artist => {
             const item = document.createElement("div"); // dynamically create element
+            item.className = "artist";
             item.textContent = `${artist.name} - ${artist.num_albums} albums - Popularity: ${artist.popularity} - Top Tracks: ${artist.top_tracks}`;
-            
+
             const deleteBtn = document.createElement("button"); // dynamically create element
             
             deleteBtn.className = "delete-btn";
             
             deleteBtn.textContent = "Delete";
-            deleteBtn.style.marginLeft = "10px";
 
             deleteBtn.addEventListener("click", () => {
                 fetch(`http://127.0.0.1:5000/artists/${encodeURIComponent(artist.name)}`, {
